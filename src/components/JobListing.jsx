@@ -1,4 +1,15 @@
-function JobListing({ job }) {
+import { useState } from "react";
+
+const JobListing = ({ job }) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  /* useState changes the text displayed depending if more or less is clicked */
+
+  let description = job.description;
+
+  if (!showFullDescription) {
+    description = description.substring(0, 90) + '...';
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-md relative">
       <div className="p-4">
@@ -7,9 +18,12 @@ function JobListing({ job }) {
           <h3 className="text-xl font-bold">{job.title}</h3>
         </div>
 
-        <div className="mb-5">
-          {job.description}
-        </div>
+        <div className="mb-5">{description}</div>
+
+        <button onClick={() => setShowFullDescription((prevState) =>
+          !prevState)} className="text-indigo-500 mb-5 hover:text-indigo-600">
+          {showFullDescription ? 'Less' : 'More'}</button> {/* show.. if 'less' else 'more' */}
+
 
         <h3 className="text-indigo-500 mb-2">{job.salary}</h3>
 
@@ -30,6 +44,6 @@ function JobListing({ job }) {
       </div>
     </div>
   );
-}
+};
 
 export default JobListing;
